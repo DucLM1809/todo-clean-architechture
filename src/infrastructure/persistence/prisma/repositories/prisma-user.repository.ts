@@ -7,8 +7,8 @@ import {
   PaginateFunction,
   PaginatedResult,
 } from '@app/core/models/pagination.model';
-import { paginator } from '@app/core/serivces/paginator';
 import { IUserPaginationRequest } from '../models/prisma-users-pagination.interface';
+import { paginator } from '@app/infrastructure/services/pagination/paginator';
 
 const paginate: PaginateFunction = paginator({});
 

@@ -1,4 +1,7 @@
-import { PaginateFunction, PaginateOptions } from '../models/pagination.model';
+import {
+  PaginateFunction,
+  PaginateOptions,
+} from '@app/core/models/pagination.model';
 
 export const paginator = (
   defaultOptions: PaginateOptions,
