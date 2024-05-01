@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json.schemastore.org/swcrc",
+    "sourceMaps": true,
+    "jsc": {
+        "parser": {
+            "syntax": "typescript",
+            "decorators": true,
+            "dynamicImport": true
+        },
+        "transform": {
+            "legacyDecorator": true,
+            "decoratorMetadata": true
+        },
+        "paths": {
+            "@app/core": [
+                "src/core"
+            ],
+            "@app/core/*": [
+                "src/core/*"
+            ],
+            "@app/api": [
+                "src/api"
+            ],
+            "@app/api/*": [
+                "src/api/*"
+            ],
+            "@app/application": [
+                "src/application"
+            ],
+            "@app/application/*": [
+                "src/application/*"
+            ],
+            "@app/domain": [
+                "src/domain"
+            ],
+            "@app/domain/*": [
+                "src/domain/*"
+            ],
+            "@app/infrastructure": [
+                "src/infrastructure"
+            ],
+            "@app/infrastructure/*": [
+                "src/infrastructure/*"
+            ]
+        },
+        "baseUrl": "./"
+    },
+    "minify": false
+}

@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  node-app:
+    build: .
+    container_name: todo-clean-architecture
+    environment:
+      - PORT=8080
+      - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgresdb
+    volumes:
+      - .:/usr/src/node-app
+    networks:
+      - node-network
+
+  postgresdb:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    networks:
+      - node-network
+
+volumes:
+  dbdata:
+    driver: local
+
+networks:
+  node-network:
+    driver: bridge
