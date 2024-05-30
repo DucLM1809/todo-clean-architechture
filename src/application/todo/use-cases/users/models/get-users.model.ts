@@ -1,14 +1,14 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt } from 'class-validator';
 
 export class UsersQueryValidator {
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsInt()
   @Type(() => Number)
   page?: number;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsInt()
   @Type(() => Number)
   perPage?: number;

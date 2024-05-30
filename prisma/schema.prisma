@@ -13,7 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN @map("ADMIN")
+  USER  @map("USER")
+}
+
 model User {
-  id   String @id @default(uuid())
-  name String
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+
+  @@map("users")
+}
+
+model Token {
+  id     Int    @id @default(autoincrement())
+  value  String
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tokens")
 }

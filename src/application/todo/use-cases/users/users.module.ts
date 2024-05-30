@@ -5,7 +5,6 @@ import { QueryHandlers } from './queries';
 
 @Module({
   imports: [CqrsModule],
-  controllers: [],
   providers: [...CommandHandlers, ...QueryHandlers],
 })
 export class UsersModule {}

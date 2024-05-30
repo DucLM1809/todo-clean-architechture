@@ -1,10 +1,10 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 
 export abstract class Entity<Props> extends AggregateRoot<Props> {
-  protected props: Props;
+  protected data: Props;
 
-  protected constructor(props: Props) {
+  protected constructor(data: Props) {
     super();
-    this.props = props;
+    this.data = data;
   }
 }

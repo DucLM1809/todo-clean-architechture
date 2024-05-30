@@ -1,7 +1,7 @@
 export abstract class ValueObject<Props> {
-  protected props: Props;
+  protected data: Props;
 
-  protected constructor(props: Props) {
-    this.props = props;
+  protected constructor(data: Props) {
+    this.data = data;
   }
 }

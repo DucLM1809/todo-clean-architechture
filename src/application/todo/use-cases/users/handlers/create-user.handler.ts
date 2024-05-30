@@ -1,12 +1,12 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../commands/create-user.command';
-import { UserRepository } from '@app/application/todo/repositories/userRepository.interface';
 import { User } from '@app/domain/todo/entities/user';
+import { IUserRepository } from '@app/application/todo/repositories/userRepository.interface';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: IUserRepository,
     private readonly publisher: EventPublisher,
   ) {}
 

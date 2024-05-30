@@ -1,4 +1,4 @@
-import { IBcryptService } from '@app/application/todo/adapters/bcrypt.interface';
+import { IBcryptService } from '@app/application/common/adapters/bcrypt.interface';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 

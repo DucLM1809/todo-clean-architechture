@@ -6,6 +6,9 @@ export class PrismaUserMapper {
     const model = new User({
       id: entity.id,
       name: entity.name,
+      email: entity.email,
+      role: entity.role,
+      password: entity.password,
     });
     return model;
   }
@@ -13,6 +16,8 @@ export class PrismaUserMapper {
   static toPrisma(user: User): Prisma.UserUncheckedCreateInput {
     return {
       name: user.name,
+      email: user.email,
+      password: user.password,
     };
   }
 }
