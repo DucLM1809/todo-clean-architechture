@@ -8,9 +8,11 @@ import { RegisterDto } from '../dto/auth/register.dto';
 import { RefreshTokenCommand } from '@app/application/todo/use-cases/auth/commands/refresh-token.command';
 import { RefreshTokenDto } from '../dto/auth/refresh-token.dto';
 import { LoginGuard } from '@app/application/common/guards/login.guard';
+import { Public } from '@app/application/common/decorators/public.decorator';
 
 @Controller('/auth')
 @ApiTags('Auth')
+@Public()
 export class AuthController {
   constructor(private readonly commandBus: CommandBus) {}
 

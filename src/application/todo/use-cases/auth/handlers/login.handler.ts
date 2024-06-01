@@ -3,7 +3,10 @@ import { LoginCommand } from '../commands/login.command';
 import exclude from '@app/core/utils/exclude';
 import { ITokenRepository } from '@app/application/todo/repositories/tokenRepository.interface';
 import { Token } from '@app/domain/todo/entities/token';
-import { IJwtService } from '@app/application/common/adapters/jwt.interface';
+import {
+  IJwtService,
+  IJwtServicePayload,
+} from '@app/application/common/adapters/jwt.interface';
 import { IUserRepository } from '@app/application/todo/repositories/userRepository.interface';
 
 @CommandHandler(LoginCommand)
@@ -20,20 +23,13 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
 
     const user = await this.userRepository.findByEmail(login.email);
 
-    const payload = {
-      userId: user.id,
+    const payload: IJwtServicePayload = {
+      id: user.id,
+      email: user.email,
     };
 
-    const accessToken = this.jwtService.generateToken(
-      payload,
-      process.env.JWT_SECRET,
-      process.env.JWT_EXPIRATION_TIME,
-    );
-    const refreshToken = this.jwtService.generateToken(
-      payload,
-      process.env.JWT_REFRESH_TOKEN_SECRET,
-      process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
-    );
+    const accessToken = this.jwtService.generateToken(payload);
+    const refreshToken = this.jwtService.generateToken(payload);
 
     const saveToken = new Token({ userId: user.id, value: refreshToken });
 

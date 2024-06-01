@@ -3,7 +3,5 @@ import { Module } from '@nestjs/common';
 
 @Module({
   imports: [ApiModule],
-  controllers: [],
-  providers: [],
 })
 export class TodoModule {}

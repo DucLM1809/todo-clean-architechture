@@ -5,10 +5,11 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CacheKey } from '@nestjs/cache-manager';
 import { HttpCacheInterceptor } from '@app/infrastructure/persistence/cache/interceptor/http-cache.interceptor';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
@@ -19,8 +20,11 @@ import {
   GetUsersQuery,
 } from '@app/application/todo/use-cases/users/models/get-users.model';
 import { GetUserQuery } from '@app/application/todo/use-cases/users/models/get-user.model';
+import { JwtAuthGuard } from '@app/application/common/guards/jwtAuth.guard';
 
 @Controller('/user')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @ApiTags('User')
 export class UserController {
   constructor(
