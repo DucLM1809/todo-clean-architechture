@@ -1,6 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { LoginCommand } from '../commands/login.command';
-import { IBcryptService } from '@app/application/common/adapters/bcrypt.interface';
 import exclude from '@app/core/utils/exclude';
 import { ITokenRepository } from '@app/application/todo/repositories/tokenRepository.interface';
 import { Token } from '@app/domain/todo/entities/token';
@@ -10,7 +9,6 @@ import { IUserRepository } from '@app/application/todo/repositories/userReposito
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {
   constructor(
-    private readonly bcryptService: IBcryptService,
     private readonly jwtService: IJwtService,
     private readonly userRepository: IUserRepository,
     private readonly tokenRepository: ITokenRepository,
@@ -21,16 +19,6 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     const { login } = command;
 
     const user = await this.userRepository.findByEmail(login.email);
-    // const isPasswordCorrect = await this.bcryptService.compare(
-    //   login.password,
-    //   user.password,
-    // );
-
-    // if (!user || !isPasswordCorrect) {
-    //   this.exception.badRequestException({
-    //     message: 'Invalid credentials',
-    //   });
-    // }
 
     const payload = {
       userId: user.id,

@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionFilter } from './application/common/filter/exception.filter';
-import { LoggerService } from './application/common/logger/logger.service';
+import { LoggerService } from './infrastructure/common/logger/logger.service';
 import { LoggingInterceptor } from './application/common/interceptors/logger.interceptor';
 import {
   ResponseFormat,

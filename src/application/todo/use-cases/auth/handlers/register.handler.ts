@@ -4,7 +4,7 @@ import { User } from '@app/domain/todo/entities/user';
 import { IBcryptService } from '@app/application/common/adapters/bcrypt.interface';
 import exclude from '@app/core/utils/exclude';
 import { IUserRepository } from '@app/application/todo/repositories/userRepository.interface';
-import { ExceptionsService } from '@app/application/common/exceptions/exceptions.service';
+import { IException } from '@app/application/common/exceptions/exceptions.interface';
 
 @CommandHandler(RegisterCommand)
 export class RegisterHandler implements ICommandHandler<RegisterCommand> {
@@ -12,7 +12,7 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
     private readonly userRepository: IUserRepository,
     private readonly bcryptService: IBcryptService,
     private readonly publisher: EventPublisher,
-    private readonly exception: ExceptionsService,
+    private readonly exception: IException,
   ) {}
 
   async execute(command: RegisterCommand) {

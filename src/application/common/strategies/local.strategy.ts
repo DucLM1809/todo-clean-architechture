@@ -3,16 +3,16 @@ import { IUserRepository } from '@app/application/todo/repositories/userReposito
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { ExceptionsService } from '../exceptions/exceptions.service';
-import { LoggerService } from '../logger/logger.service';
+import { IException } from '../exceptions/exceptions.interface';
+import { ILogger } from '../logger/logger.interface';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly bcryptService: IBcryptService,
-    private readonly exception: ExceptionsService,
-    private readonly logger: LoggerService,
+    private readonly exception: IException,
+    private readonly logger: ILogger,
   ) {
     super({
       usernameField: 'email',
@@ -20,7 +20,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string): Promise<any> {
-    this.logger.debug('LocalStrategy.validate', username);
     const user = await this.userRepository.findByEmail(username);
     const isPasswordCorrect = await this.bcryptService.compare(
       password,
@@ -32,6 +31,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         message: 'Invalid credentials',
       });
     }
+
+    this.logger.log('LocalStrategy', 'User validated');
 
     return user;
   }

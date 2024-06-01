@@ -7,8 +7,6 @@ import { AuthController } from './auth.controller';
 import { AuthModule } from '@app/application/todo/use-cases/auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from '@app/application/common/strategies/local.strategy';
-import { ExceptionsService } from '@app/application/common/exceptions/exceptions.service';
-import { LoggerService } from '@app/application/common/logger/logger.service';
 
 @Module({
   imports: [
@@ -19,6 +17,6 @@ import { LoggerService } from '@app/application/common/logger/logger.service';
     AuthModule,
   ],
   controllers: [UserController, AuthController],
-  providers: [ExceptionsService, LoggerService, LocalStrategy],
+  providers: [LocalStrategy],
 })
 export class ApiModule {}
