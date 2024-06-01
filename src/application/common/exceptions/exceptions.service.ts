@@ -1,8 +1,4 @@
 import {
-  IException,
-  IFormatExceptionMessage,
-} from '@app/application/common/exceptions/exceptions.interface';
-import {
   BadRequestException,
   ForbiddenException,
   Injectable,
@@ -11,8 +7,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
+interface IFormatExceptionMessage {
+  message: string;
+  statusCode?: number;
+}
+
 @Injectable()
-export class ExceptionsService implements IException {
+export class ExceptionsService {
   badRequestException(data: IFormatExceptionMessage): void {
     throw new BadRequestException(data.message);
   }

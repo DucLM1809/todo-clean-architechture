@@ -7,16 +7,17 @@ interface JwtModuleOptions {
   global?: boolean;
 }
 
-@Module({})
+@Module({
+  imports: [
+    Jwt.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: Number(process.env.JWT_EXPIRATION_TIME) },
+    }),
+  ],
+})
 export class JwtModule {
   static async register({ global = false }: JwtModuleOptions) {
     return {
-      imports: [
-        Jwt.register({
-          secret: process.env.JWT_SECRET,
-          signOptions: { expiresIn: Number(process.env.JWT_EXPIRATION_TIME) },
-        }),
-      ],
       global,
       module: JwtModule,
       providers: [

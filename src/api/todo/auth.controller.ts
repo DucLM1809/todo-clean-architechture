@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, UsePipes } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDto } from '../dto/auth/login.dto';
@@ -7,15 +7,17 @@ import { RegisterCommand } from '@app/application/todo/use-cases/auth/commands/r
 import { RegisterDto } from '../dto/auth/register.dto';
 import { RefreshTokenCommand } from '@app/application/todo/use-cases/auth/commands/refresh-token.command';
 import { RefreshTokenDto } from '../dto/auth/refresh-token.dto';
+import { LoginGuard } from '@app/application/common/guards/login.guard';
 
 @Controller('/auth')
 @ApiTags('Auth')
 export class AuthController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @UseGuards(LoginGuard)
   @Post('/login')
   @UsePipes()
-  login(@Body() loginDto: LoginDto, @Request() req) {
+  login(@Body() loginDto: LoginDto) {
     return this.commandBus.execute(new LoginCommand(loginDto));
   }
 
