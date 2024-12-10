@@ -32,4 +32,12 @@ export class PrismaTokenRepository implements ITokenRepository {
 
     return entity ? PrismaTokenMapper.toDomain(entity) : null;
   }
+
+  async delete(refreshToken: string): Promise<void> {
+    await this.prisma.token.delete({
+      where: {
+        value: refreshToken,
+      },
+    });
+  }
 }

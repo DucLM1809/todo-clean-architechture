@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionFilter } from './application/common/filter/exception.filter';
 import { LoggerService } from './infrastructure/common/logger/logger.service';
@@ -9,7 +9,7 @@ import {
 } from './application/common/interceptors/response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { EnvironmentConfigService } from './infrastructure/config/environment-config';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const env = process.env.NODE_ENV;
@@ -33,6 +33,12 @@ async function bootstrap() {
   );
 
   // Interceptors
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      strategy: 'excludeAll',
+      excludeExtraneousValues: true,
+    }),
+  );
   app.useGlobalInterceptors(new LoggingInterceptor(new LoggerService()));
   app.useGlobalInterceptors(new ResponseInterceptor());
 

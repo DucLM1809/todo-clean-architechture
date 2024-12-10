@@ -8,6 +8,7 @@ import {
   IJwtServicePayload,
 } from '@app/application/common/adapters/jwt.interface';
 import { IUserRepository } from '@app/application/todo/repositories/userRepository.interface';
+import { LoginResponseDto } from '@app/api/dto/auth/login.dto';
 
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {
@@ -18,7 +19,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     private readonly publisher: EventPublisher,
   ) {}
 
-  async execute(command: LoginCommand) {
+  async execute(command: LoginCommand): Promise<LoginResponseDto> {
     const { login } = command;
 
     const user = await this.userRepository.findByEmail(login.email);
@@ -37,6 +38,9 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
 
     this.publisher.mergeObjectContext(user);
 
-    return exclude({ ...login, accessToken, refreshToken }, ['password']);
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 }

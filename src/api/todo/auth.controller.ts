@@ -9,6 +9,8 @@ import { RefreshTokenCommand } from '@app/application/todo/use-cases/auth/comman
 import { RefreshTokenDto } from '../dto/auth/refresh-token.dto';
 import { LoginGuard } from '@app/application/common/guards/login.guard';
 import { Public } from '@app/application/common/decorators/public.decorator';
+import { LogoutCommand } from '@app/application/todo/use-cases/auth/commands/logout.command';
+import { LogoutDto } from '../dto/auth/logout.dto';
 
 @Controller('/auth')
 @ApiTags('Auth')
@@ -33,5 +35,11 @@ export class AuthController {
   @UsePipes()
   refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
     return this.commandBus.execute(new RefreshTokenCommand(refreshTokenDto));
+  }
+
+  @Post('/logout')
+  @UsePipes()
+  logout(@Body() logoutDto: LogoutDto) {
+    return this.commandBus.execute(new LogoutCommand(logoutDto));
   }
 }
